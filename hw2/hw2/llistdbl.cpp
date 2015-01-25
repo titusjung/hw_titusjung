@@ -40,7 +40,8 @@ void LListDbl::insert(int loc, const double& val)
     tail_=temp;
   }
   
-  //returns immediately if loc is not within bounds 
+  //returns immediately if loc is not within bounds
+  //placed after empty case since empty would have 0 items 
   else if(loc<0 || loc>size)
     return;
   
@@ -54,7 +55,7 @@ void LListDbl::insert(int loc, const double& val)
     head_=temp;
   }
 
-  //adsd to back; this is when loc is size;
+  //adds to back; this is when loc is size;
   else if(loc == size){
     Item* temp = new Item;
     temp->val = val;
@@ -79,6 +80,10 @@ void LListDbl::insert(int loc, const double& val)
 
   }
 
+  //both size and return should be shared by all scenarios
+
+  size++;
+  return;
 }
 
 /**
@@ -86,9 +91,43 @@ void LListDbl::insert(int loc, const double& val)
  */
 void LListDbl::remove(int loc)
 {
+  //if list is empty == do nothing
 
+  if(size ==0 )
+    return;
+  // if location is out of bounds do  nothing
+  else if( loc>size || loc<0)
+    return;
 
+  //front removal; front is identified as loc == o
+  else if( loc == 0){
+    Item* newhead = head_->next;
+    newhead->prev = NULL;
+    delete head_;
+    head_ = newhead;
+  }
 
+  //back removal; back is ID-ed as loc = size-1;
+  else if( loc == size-1){
+    Item* newback = tail_->prev;
+    newback->next = NULL;
+    delete tail_;
+    tail_ = newback;
+  }
+
+  // in between removal; ID-ed as anything that passes all 
+  // tests
+  else{
+    Item* olditem = getNodeAt(loc)
+    Item* previtem = olditem->prev;
+    Item* nextitem = olditem->next;
+    previtem->next = nextitem;
+    nextitem->prev = previtem;
+    delete olditem;
+  }
+
+  size--;
+  return;
 }
 
 void LListDbl::set(int loc, const double& val)
