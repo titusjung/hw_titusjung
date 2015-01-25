@@ -37,7 +37,7 @@ class LListDbl {
   /**
    * Returns true if the list is empty, false otherwise
    */
-  bool empty() const;
+  //bool empty() const;
 
   /**
    * Removes the value at index, pos

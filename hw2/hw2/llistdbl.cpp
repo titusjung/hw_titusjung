@@ -30,6 +30,54 @@ void LListDbl::insert(int loc, const double& val)
 {
 
 
+  //adds if empty
+  if(size == 0){
+    Item* temp = new Item;
+    temp->val = val;
+    temp->prev = NULL;
+    temp->next = NULL;
+    head_= temp;
+    tail_=temp;
+  }
+  
+  //returns immediately if loc is not within bounds 
+  else if(loc<0 || loc>size)
+    return;
+  
+  //adds to front; this is when loc is 0;
+  else if(loc == 0){
+    Item* temp = new  Item;
+    temp ->val = val;
+    temp->next = head_;
+    temp->prev = NULL;
+    head_->prev = temp;
+    head_=temp;
+  }
+
+  //adsd to back; this is when loc is size;
+  else if(loc == size){
+    Item* temp = new Item;
+    temp->val = val;
+    temp->next= NULL;
+    temp->prev = tail;
+    tail_->next = temp;
+    tail = temp;
+  }
+
+  /*adds to middle; everythinig else
+  this works by pushing the old item that was
+  at the location forwards(closer to head)*/
+  else{
+
+    Item* olditem = getNodeAt(loc);
+    Item* newitem = new Item;
+    newitem->val = val;
+    newitem->prev = olditem;
+    newitem->next = olditem->next;
+    olditem->next = newitem;
+
+
+  }
 
 }
 
